@@ -128,7 +128,17 @@ function editPlaylist(playlistId, songId) {
 }
 
 function playlistDuration(id) {
-  // your code here
+  let playlistLocation = getPlaylistLocationByID(id);
+  if (playlistLocation === undefined){
+    return new Error ("Error - Can't find playlist");
+  }
+  let playlistSongsArray = player.playlists[playlistLocation].songs;
+  let totalDuration = 0;
+  for (let songID of playlistSongsArray){
+    let song = getSongByID(songID)
+    totalDuration += song.duration;
+  }
+  return totalDuration;
 }
 
 function searchByQuery(query) {
