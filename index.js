@@ -94,8 +94,15 @@ function createPlaylist(name, id) {
   return id;
 }
 
-function playPlaylist(id) {
-  // your code here
+function playPlaylist(id) { 
+  let playlistLocation = getPlaylistLocationByID(id);
+  if (id === undefined || playlistLocation === undefined){
+    throw new Error("Error - Can't find playlist");
+  }
+  let playlistSongsArray = player.playlists[playlistLocation].songs;
+  for (let song of playlistSongsArray){
+    playSong(song);
+  }
 }
 
 function editPlaylist(playlistId, songId) {
