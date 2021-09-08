@@ -106,7 +106,25 @@ function playPlaylist(id) {
 }
 
 function editPlaylist(playlistId, songId) {
-  // your code here
+  let playlistLocation = getPlaylistLocationByID(playlistId);
+  let correctID = findAvailableID ("songs" , songId);
+  //  Did not receive input    || There isn'n playlist matches   || The song exists - did not need another id  
+  if (playlistId === undefined || playlistLocation === undefined || songId === correctID){
+    throw new Error("Error - Can't find playlist / song");
+  }
+  let playlistSongsArray = player.playlists[playlistLocation].songs;
+  if (playlistSongsArray.includes(songId)){
+    for (let i = 0; i < playlistSongsArray.length; i++){
+      if (songId === playlistSongsArray[i]){
+        playlistSongsArray.splice(i, 1);
+      }
+    }
+  } else {
+    playlistSongsArray.push(songId);
+  }
+  if (playlistSongsArray.length === 0){
+    player.playlists.splice(playlistLocation, 1);
+  }
 }
 
 function playlistDuration(id) {
@@ -141,7 +159,7 @@ function getSongByID (id) {
   }
   return "Wrong ID";
 }
-
+// return the playlist index of the playlist with the id in the player.playlists array
 function getPlaylistLocationByID (id) {
   for (let i = 0; i < player.playlists.length ; i++){
     if (player.playlists[i].id === id){
