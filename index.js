@@ -67,7 +67,13 @@ function removeSong(id) {
 }
 
 function addSong(title, album, artist, duration, id) {
-  // your code here
+  let newID = findAvailableID ("songs" , id);
+  if (newID === undefined){
+    throw  new Error("Error - Wrong ID");
+  }
+  let newSong = { "id" :newID, title, album, artist, "duration": durationToMMSS(duration)};
+  player.songs.push(newSong);
+  return newID;
 }
 
 function removePlaylist(id) {
@@ -138,6 +144,7 @@ function getPlaylistLocationByID (id) {
   return undefined;
 }
 
+// create an array of the reserved ID's sort him and return the array
 function reservedID (key){
   const arrayOfID = [];
   for (let obj of player[key]){
