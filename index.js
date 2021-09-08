@@ -52,7 +52,7 @@ const player = {
   },
 }
 
-function playSong(id) {
+function playSong(id) { 
   // your code here
 }
 
@@ -90,6 +90,27 @@ function searchByQuery(query) {
 
 function searchByDuration(duration) {
   // your code here
+}
+
+function durationToMMSS (duration){
+  let durationMinutes = Math.floor(duration/60);
+  let durationSeconds = duration % 60;
+  if (durationMinutes < 10){
+    durationMinutes = `0${durationMinutes}`;
+  }
+  if (durationSeconds < 10){
+    durationSeconds = `0${durationSeconds}`;
+  }
+  return `"${durationMinutes}:${durationSeconds}"`;
+}
+
+function getSongByID (id) {
+  for (let song of player.songs){
+    if (song.id === id){
+      return song;
+    }
+  }
+  return "Wrong ID";
 }
 
 module.exports = {
