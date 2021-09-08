@@ -69,7 +69,12 @@ function removePlaylist(id) {
 }
 
 function createPlaylist(name, id) {
-  // your code here
+  id = findAvailableID("playlists", id) ; 
+  if (id === undefined){
+    throw new Error("Error - Reserved ID");
+  }
+  player.playlists.push({"id": id, "name": name, "songs": []})
+  return id;
 }
 
 function playPlaylist(id) {
@@ -111,6 +116,32 @@ function getSongByID (id) {
     }
   }
   return "Wrong ID";
+}
+function reservedID (key){
+  const arrayOfID = [];
+  for (let obj of player[key]){
+    arrayOfID.push(obj["id"]);
+  }
+  arrayOfID.sort((a,b)=>a-b);
+  return arrayOfID;
+}
+
+function findAvailableID (key , id) {
+  const arrayOfID = reservedID(key);
+  if (id === undefined){
+    for (let i = 0 ; i < arrayOfID.length; i++){
+      if (i+1 !== arrayOfID[i]){ //uses i+1 for ID bigger then 0.
+        return i+1;
+      }
+    }
+  } else {
+    for (let value of arrayOfID){
+      if (value === id){
+        return undefined;
+      }
+    }
+    return id;
+  } 
 }
 
 module.exports = {
