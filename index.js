@@ -48,12 +48,18 @@ const player = {
     { id: 5, name: 'Israeli', songs: [4, 5] },
   ],
   playSong(song) {
-    console.log(/* your code here */)
+    console.log(`Playing ${song.title} from ${song.album} by ${song.artist} | ${durationToMMSS(song.duration)}.`);
   },
 }
 
-function playSong(id) { 
-  // your code here
+function playSong(id) {
+  for (let song of player.songs){
+    if (song.id === id)
+    {
+      return player.playSong(song);
+    }
+  }
+  throw new Error("Error - Wrong ID");
 }
 
 function removeSong(id) {
@@ -106,12 +112,12 @@ function durationToMMSS (duration){
   let durationMinutes = Math.floor(duration/60);
   let durationSeconds = duration % 60;
   if (durationMinutes < 10){
-    durationMinutes = `0${durationMinutes}`;
+    durationMinutes =  "0" + durationMinutes;
   }
   if (durationSeconds < 10){
-    durationSeconds = `0${durationSeconds}`;
+    durationSeconds = "0" + durationSeconds;
   }
-  return `"${durationMinutes}:${durationSeconds}"`;
+  return durationMinutes+":" +durationSeconds;
 }
 
 function getSongByID (id) {
