@@ -65,7 +65,12 @@ function addSong(title, album, artist, duration, id) {
 }
 
 function removePlaylist(id) {
-  // your code here
+  let playlistLocation = getPlaylistLocationByID(id);
+  if (playlistLocation === undefined){
+    throw new Error("Error - Wrong ID");
+  } else {
+    player.playlists.splice(playlistLocation, 1);
+  } 
 }
 
 function createPlaylist(name, id) {
@@ -117,6 +122,16 @@ function getSongByID (id) {
   }
   return "Wrong ID";
 }
+
+function getPlaylistLocationByID (id) {
+  for (let i = 0; i < player.playlists.length ; i++){
+    if (player.playlists[i].id === id){
+      return i;
+    }
+  }
+  return undefined;
+}
+
 function reservedID (key){
   const arrayOfID = [];
   for (let obj of player[key]){
