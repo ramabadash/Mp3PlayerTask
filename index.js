@@ -71,7 +71,8 @@ function addSong(title, album, artist, duration, id) {
   if (newID === undefined){
     throw  new Error("Error - Wrong ID");
   }
-  let newSong = { "id" :newID, title, album, artist, "duration": durationToMMSS(duration)};
+  let durationInSeconds = durationFromMMSS(duration) ; 
+  let newSong = {"id" :newID, title, album, artist, "duration" : durationInSeconds};
   player.songs.push(newSong);
   return newID;
 }
@@ -147,6 +148,12 @@ function searchByQuery(query) {
 
 function searchByDuration(duration) {
   // your code here
+}
+function durationFromMMSS(duration) {
+  const splitDuration = duration.split(":");
+  let durationMinutes = splitDuration[0]; 
+  let durationSeconds = splitDuration[1];
+  return durationMinutes*60 + durationSeconds*1;
 }
 
 function durationToMMSS (duration){
