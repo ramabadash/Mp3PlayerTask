@@ -51,6 +51,7 @@ const player = {
     console.log(`Playing ${song.title} from ${song.album} by ${song.artist} | ${durationToMMSS(song.duration)}.`);
   },
 }
+/*START MAIN FUNCTIONS*/
 
 function playSong(id) {
   for (let song of player.songs){
@@ -154,12 +155,32 @@ function playlistDuration(id) {
 }
 
 function searchByQuery(query) {
-  // your code here
+  const result = {"songs": [] , "playlists": []};
+  // search in songs
+  for (let song of player.songs){
+    if (SearchSongByQuery (query , song)){
+      result.songs.push(song);
+    }
+  }
+  //search in playlists
+  for (let playlist of player.playlists){
+    if (SearchPlaylistByQuery (query, playlist)) {
+      result.playlists.push(playlist);
+    }
+  }
+  //the sort - song by title , playlist by name
+  result.songs.sort((song1 , song2) => { return song1.title > song2.title ? 1 : -1});
+  result.playlists.sort((playlist1 , playlist2) => { return playlist1.name > playlist2.name ? 1 : -1});
+  return result;
 }
 
 function searchByDuration(duration) {
   // your code here
 }
+
+/*END MAIN FUNCTIONS*/
+
+/* START ASSIST FUNCTIONS */
 function durationFromMMSS(duration) {
   const splitDuration = duration.split(":");
   let durationMinutes = splitDuration[0]; 
@@ -244,6 +265,22 @@ function removeSongFromPlaylist(songId , index){
   } 
 }
 
+function SearchSongByQuery (query , song){
+  query = query.toLowerCase();
+  let lowercaseTitle = song.title.toLowerCase();
+  let lowercaseAlbum = song.album.toLowerCase();
+  let lowercaseArtist = song.artist.toLowerCase();
+  return (lowercaseTitle.includes(query) || lowercaseArtist.includes(query) || lowercaseArtist.includes(query) );
+}
+
+function SearchPlaylistByQuery (query , playlist){
+  query = query.toLowerCase();
+  let lowercaseName = playlist.name.toLowerCase();
+  return lowercaseName.includes(query);
+}
+
+
+/* END ASSIST FUNCTIONS */
 module.exports = {
   player,
   playSong,
