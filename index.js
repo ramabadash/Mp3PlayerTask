@@ -63,9 +63,20 @@ function playSong(id) {
 }
 
 function removeSong(id) {
-  // your code here
+  //remove from songs
+  let songIndex = getSongLocationByID(id);
+  if (songIndex === undefined){
+    throw new Error("Error - Wrong ID");
+  }
+  player.songs.splice(songIndex ,1);
+  //remove from playlists
+  for (let i = 0; i < player.playlists.length; i++){
+    if (player.playlists[i].songs.includes(id)){
+      removeSongFromPlaylist(id , i);
+    }
+  }
 }
-
+  
 function addSong(title, album, artist, duration, id) {
   let newID = findAvailableID ("songs" , id);
   if (newID === undefined){
@@ -174,12 +185,22 @@ function getSongByID (id) {
       return song;
     }
   }
-  return "Wrong ID";
+  return undefined;
 }
 // return the playlist index of the playlist with the id in the player.playlists array
 function getPlaylistLocationByID (id) {
   for (let i = 0; i < player.playlists.length ; i++){
     if (player.playlists[i].id === id){
+      return i;
+    }
+  }
+  return undefined;
+}
+
+// return the song index of the song with the id in the player.songs array
+function getSongLocationByID (id) {
+  for (let i = 0; i < player.songs.length ; i++){
+    if (player.songs[i].id === id){
       return i;
     }
   }
@@ -211,6 +232,15 @@ function findAvailableID (key , id) {
       }
     }
     return id;
+  } 
+}
+
+function removeSongFromPlaylist(songId , index){
+  const songsArray = player.playlists[index].songs;
+  for (let j = 0; j < songsArray.length; j++){
+    if (songsArray[j] === songId){
+      songsArray.splice(j, 1);
+    }
   } 
 }
 
