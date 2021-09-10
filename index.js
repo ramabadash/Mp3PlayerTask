@@ -51,12 +51,12 @@ const player = {
     console.log(`Playing ${song.title} from ${song.album} by ${song.artist} | ${durationToMMSS(song.duration)}.`);
   },
 }
+/*END OF OBJECT PLAYER */
 /*START MAIN FUNCTIONS*/
 
 function playSong(id) {
   for (let song of player.songs){
-    if (song.id === id)
-    {
+    if (song.id === id){
       return player.playSong(song);
     }
   }
@@ -175,7 +175,27 @@ function searchByQuery(query) {
 }
 
 function searchByDuration(duration) {
-  // your code here
+  let durationInSeconds = durationFromMMSS(duration);
+  let smallestDifference= Infinity;
+  let nearestDuration;
+  let correntDifference;
+  //search between songs
+  for (let song of player.songs){
+    correntDifference = Math.abs(durationInSeconds - song.duration);
+    if ( correntDifference < smallestDifference){
+      smallestDifference = correntDifference;
+      nearestDuration = song;
+    }
+  }
+  //search between playlists
+  for (let playlist of player.playlists){
+    correntDifference = Math.abs(durationInSeconds - playlistDuration(playlist.id));
+    if (correntDifference < smallestDifference){
+      smallestDifference= correntDifference;
+      nearestDuration = playlist;
+    }
+  }
+    return nearestDuration ;
 }
 
 /*END MAIN FUNCTIONS*/
