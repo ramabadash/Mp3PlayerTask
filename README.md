@@ -1,17 +1,6 @@
 # MP3 Player - Second Weekend Assignment
-You are going to implement an MP3 player.
 
-
-## Instructions
-1. Fork this repo into your account.
-2. Clone the forked repo to your computer.
-3. Execute `npm install` in the project folder to install the [tests](#testing).
-4. Create a new git branch for your work.
-5. Complete the project [requirements](#requirements).
-6. Remember to push your commits regularly to GitHub.
-7. Submit your work (explanation [below](#submission))
-8. Good luck & have fun!
-
+This is my solution to the "MP3 Player -Second Weekend Assignment" by the requirements below:
 
 ## Requirements
 The player itself is an object that has:
@@ -48,44 +37,3 @@ You are asked to implement the following functions:
   
   The comparison in both cases should be case-insensitive.
 - `searchByDuration` - Gets a duration in `mm:ss` format (for example 11:03). Returns the song, or playlist, with the closest duration to what was given.
-
-
-## Testing
-We have added some automated tests for you to use. They will help you make sure your code covers the requirements.
-
-To run the tests, execute `npm run test` in the project folder.
-
-__Note__: These tests might not cover everything. Don't just count on them. You should remain responsible and vigilant for other possible edge-cases.
-
-
-## Grading
-Your work will be graded based on the following considerations:
-- The number of automatic tests you pass
-- Readable and ordered code
-  - Spacing & indentation
-  - Indicative vairable/function names
-  - Comments (where necessary)
-- Proper use of Git
-  - Granular commits
-  - Descriptive commit messages
-- Extra features you might have added
-
-
-## Submission
-1. On GitHub, open a pull request from your branch to the main branch.
-2. __Do not merge the pull request!__
-3. Add the user `Cyber4sPopo` as collaborator to your repo.
-4. Submit a link to the pull request in Google Classroom.
-
-
-## Important Tip
-Try to work in small iterations. You've got a big and complex task ahead of you. Break it down into smaller tasks. Concentrate on making small progress every time. Do it step by step.
-
-
-## Remarks
-- The player object must be stored in a global variable called `player`.
-- The function, method & property names should be __exactly__ as described above (for the tests to function).
-- __Avoid code duplication!__ You are free to add as many extra functions as you like.
-- Pay attention to edge-cases! Your code should throw errors when the user tries to do something invalid (delete a song that doesn't exist, etc.).
-- You can use all the material you've learned so far, including extras you've learned on your own.
-- Write your code in the `index.js` file. It contains a template which you can use as the basis for your code.
