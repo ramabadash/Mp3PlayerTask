@@ -52,8 +52,8 @@ const player = {
   },
 }
 /*END OF OBJECT PLAYER */
-/*START MAIN FUNCTIONS*/
 
+/*START MAIN FUNCTIONS*/
 function playSong(id) {
   for (let song of player.songs){
     if (song.id === id){
@@ -134,7 +134,7 @@ function editPlaylist(playlistId, songId) {
     }
   } else {
     playlistSongsArray.push(songId);
-  }
+    }
   if (playlistSongsArray.length === 0){
     player.playlists.splice(playlistLocation, 1);
   }
@@ -158,13 +158,13 @@ function searchByQuery(query) {
   const result = {"songs": [] , "playlists": []};
   // search in songs
   for (let song of player.songs){
-    if (SearchSongByQuery (query , song)){
+    if (searchSongByQuery (query , song)){
       result.songs.push(song);
     }
   }
   //search in playlists
   for (let playlist of player.playlists){
-    if (SearchPlaylistByQuery (query, playlist)) {
+    if (searchPlaylistByQuery (query, playlist)) {
       result.playlists.push(playlist);
     }
   }
@@ -197,17 +197,17 @@ function searchByDuration(duration) {
   }
     return nearestDuration ;
 }
-
 /*END MAIN FUNCTIONS*/
 
 /* START ASSIST FUNCTIONS */
+//convert duretion from String - "mm:ss" to Number -seconds.
 function durationFromMMSS(duration) {
   const splitDuration = duration.split(":");
   let durationMinutes = splitDuration[0]; 
   let durationSeconds = splitDuration[1];
   return durationMinutes*60 + durationSeconds*1;
 }
-
+//convert duretion from Number -seconds to String - "mm:ss".  
 function durationToMMSS (duration){
   let durationMinutes = Math.floor(duration/60);
   let durationSeconds = duration % 60;
@@ -217,7 +217,7 @@ function durationToMMSS (duration){
   if (durationSeconds < 10){
     durationSeconds = "0" + durationSeconds;
   }
-  return durationMinutes+":" +durationSeconds;
+  return durationMinutes + ":" + durationSeconds;
 }
 
 function getSongByID (id) {
@@ -228,7 +228,7 @@ function getSongByID (id) {
   }
   return undefined;
 }
-// return the playlist index of the playlist with the id in the player.playlists array
+// return the playlist index of the playlist with the id in player.playlists array
 function getPlaylistLocationByID (id) {
   for (let i = 0; i < player.playlists.length ; i++){
     if (player.playlists[i].id === id){
@@ -238,7 +238,7 @@ function getPlaylistLocationByID (id) {
   return undefined;
 }
 
-// return the song index of the song with the id in the player.songs array
+// return the song index of the song with the id in player.songs array
 function getSongLocationByID (id) {
   for (let i = 0; i < player.songs.length ; i++){
     if (player.songs[i].id === id){
@@ -257,16 +257,16 @@ function reservedID (key){
   arrayOfID.sort((a,b)=>a-b);
   return arrayOfID;
 }
-
+//serach in "songs" or "playlists" (key) if the id is available if not create new one. 
 function findAvailableID (key , id) {
   const arrayOfID = reservedID(key);
-  if (id === undefined){
+  if (id === undefined){ // if id was omitted - create new id
     for (let i = 0 ; i < arrayOfID.length; i++){
       if (i+1 !== arrayOfID[i]){ //uses i+1 for ID bigger then 0.
         return i+1;
       }
     }
-  } else {
+  } else { // if id was sent - cheks if available - if not return undefined
     for (let value of arrayOfID){
       if (value === id){
         return undefined;
@@ -284,16 +284,16 @@ function removeSongFromPlaylist(songId , index){
     }
   } 
 }
-
-function SearchSongByQuery (query , song){
+//serach song  - case-insensitive
+function searchSongByQuery (query , song){
   query = query.toLowerCase();
   let lowercaseTitle = song.title.toLowerCase();
   let lowercaseAlbum = song.album.toLowerCase();
   let lowercaseArtist = song.artist.toLowerCase();
-  return (lowercaseTitle.includes(query) || lowercaseArtist.includes(query) || lowercaseArtist.includes(query) );
+  return (lowercaseTitle.includes(query) || lowercaseAlbum.includes(query) || lowercaseArtist.includes(query) );
 }
-
-function SearchPlaylistByQuery (query , playlist){
+//serach playlist  - case-insensitive
+function searchPlaylistByQuery (query , playlist){
   query = query.toLowerCase();
   let lowercaseName = playlist.name.toLowerCase();
   return lowercaseName.includes(query);
